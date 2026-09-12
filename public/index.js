@@ -1,0 +1,1 @@
+let webpageButtons = document.querySelectorAll("button");
