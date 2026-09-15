@@ -46,6 +46,7 @@ button:active{
     border-radius: 1.5rem;
     height: 3rem;
     border: 1px solid aqua;
+
     display: none;
 }
 .progress-bar{
@@ -53,21 +54,20 @@ button:active{
     width: 30%;
     height: 100%;
     border-radius: 1.5rem;
-    animation: loading-bar 2s infinite;
+    /* animation: loading-bar 2s infinite; */
 }
 .note{
-    position: absolute;
-    top: 100%;
-    width: calc(100% - 1rem);
+    display: none;
     background-color: white;
-    padding: .5rem;
-    margin-top: .5rem;
+    padding: 1rem;
 }
 .note>.text{
-    color: rgb(156, 27, 27);
+    /* color: rgb(156, 27, 27); */
+    color: black;
     font-style: italic;
     font-weight: 600;
     margin: 0;
+    display: inline-block;
 }
 .progress-text{
     position: absolute;
@@ -120,7 +120,7 @@ button:active{
     }
 }
 
-@keyframes loading-bar {
+/* @keyframes loading-bar {
     10%{
         color: white;
         background-color: aqua;
@@ -146,4 +146,4 @@ button:active{
         background-color: aqua;
         width: 100%;
     }
-}
+} */
