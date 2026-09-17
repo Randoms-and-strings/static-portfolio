@@ -45,12 +45,12 @@ button:active{
     width: 100%;
     border-radius: 1.5rem;
     height: 3rem;
-    border: 1px solid aqua;
+    border: 1px solid #1ecbe1;
 
     display: none;
 }
 .progress-bar{
-    background-color: aqua;
+    background-color: #1ecbe1;
     width: 30%;
     height: 100%;
     border-radius: 1.5rem;
@@ -62,8 +62,8 @@ button:active{
     padding: 1rem;
 }
 .note>.text{
-    /* color: rgb(156, 27, 27); */
-    color: black;
+    color: rgb(156, 27, 27);
+    /* color: #1ecbe1; */
     font-style: italic;
     font-weight: 600;
     margin: 0;

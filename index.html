@@ -8,12 +8,17 @@
 </head>
 <body>
      <div class="button-container">
-
-        <button data-loader-id="Markdown-App" data-backend="https://markdown-project-backend.onrender.com" data-frontend="https://markdown-project-app.onrender.com">
+        <!-- button 1 -->
+        <button data-homepage="markdown-form/xxxy@gmail.com"
+        data-deployed-on="render" 
+        data-loader-id="Markdown-App" 
+        data-backend="https://markdown-project-backend.onrender.com" 
+        data-frontend="https://markdown-project-app.onrender.com">
             Markdown-App
         </button>
+
         <div id="Markdown-App" class="progress-bar-container">
-            <div class="progress-bar">
+            <div id="Markdown-App-progress-bar" class="progress-bar">
             
             </div>
             <p id="Markdown-App-progress-text" class="progress-text">30<span>%</span></p>
@@ -25,21 +30,22 @@
                             </p>
                     </div>
         
-        <button data-frontend="https://e-comm-app-eosin.vercel.app/">
+                    <!-- button 2 -->
+        <button data-loader-id="E-Commerce-App" data-frontend="https://e-comm-app-eosin.vercel.app/">
             E-Commerce App/Frontend
         </button>
-        <div id="E-Commerce" class="progress-bar-container">
-            <div class="progress-bar">
+
+        <div data-deployed-on="vercel" id="E-Commerce-App" class="progress-bar-container">
+            <div id="E-Commerce-App-progress-bar" class="progress-bar">
             
             </div>
-            <p id="Markdown-App-progress-text" class="progress-text">30%</p>
-
-            <div class="note">
+            <p id="E-Commerce-App-progress-text" class="progress-text">30%</p>
+        </div>
+        <div id="E-Commerce-App-note" class="note">
                 <p class="text">
-                    <em>Note: </em>
+                    <em>Note: </em>Verifying vercel's availability.....
                 </p>
             </div>
-        </div>
        
      </div>
      <script type="text/javascript" src="./public/index.js"></script>
