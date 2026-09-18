@@ -4,30 +4,33 @@ const defaultRenderMessage = "<em>Note: </em>Apps Deployed Free On Render Typica
 const defaultVercelMessage = "<em>Note: </em>Verifying vercel's availability.....<br/>Please Wait."
 
 for(let i=0; i<webpageButtons.length;i++){
-    // console.log(webpageButtons[i]);
-    // webpageButtons[i].addEventListener("click", checkBackendReady);
-    // webpageButtons[i].addEventListener("click", checkFrontendReady);
+    
     webpageButtons[i].addEventListener("click", callBackendAndFrontendTogether);
-    //  console.log("miss?");
+    
+    // further style buttons for glass effect, plus red background and text on error;
 }
 async function callBackendAndFrontendTogether(event){
    
     const [backend, frontend] = await Promise.allSettled([checkBackendReady(event), checkFrontendReady(event)]);
     console.log(backend, frontend);
-    if(backend.value===true && frontend.value===true){
+    if((backend.value===true && frontend.value===true) || (backend.value==null && frontend.value===true)){
        setTimeout(()=>{
         // to check if the home page has an extra slug or param. basically that it isnt "/"
         const homepageExtraArgs = event.target.getAttribute("data-homepage");
         if(homepageExtraArgs){
             window.location.href = `${event.target.getAttribute("data-frontend")}/${homepageExtraArgs}`;
+            
         }else{
-            window.location.href = `${event.target.getAttribute("data-frontend")}/fff`;
+            window.location.href = `${event.target.getAttribute("data-frontend")}/`;
         }
         
        }, 1000);  
-    } else if(backend.value==null && frontend.value===true){
-        window.location.href = `${event.target.getAttribute("data-frontend")}/`;
-    }
+
+    } 
+    // else if(backend.value==null && frontend.value===true){
+    //     // 
+    //     window.location.href = `${event.target.getAttribute("data-frontend")}/`;
+    // }
       
 }
 
@@ -36,6 +39,7 @@ async function checkFrontendReady(eventButton){
     const frontendUrl = eventButton.target.getAttribute("data-frontend"); //no need to check it exists cos frontend has to
     const loaderAnimationId = eventButton.target.getAttribute("data-loader-id");
     const explanatoryNote = document.querySelector(`#${loaderAnimationId}-note`);
+    const testPath = eventButton.target.getAttribute("data-test-path");
 
     if(backendUrl){ //if backend url exists, loader would be triggered already,so ignore doing that here.
         
@@ -66,11 +70,14 @@ async function checkFrontendReady(eventButton){
         return true;
         
     }else{
+        if(testPath){
+            return await checkBackendOrFrontend(eventButton, frontendUrl, testPath);
+        }
         return await checkBackendOrFrontend(eventButton, frontendUrl);
     }
 }
 
-async function checkBackendOrFrontend(eventButton, theUrl){
+async function checkBackendOrFrontend(eventButton, theUrl, testPath="availability"){
     // const theUrl = event.target.getAttribute(urlAttribute);
         const loaderAnimationId = eventButton.target.getAttribute("data-loader-id");
         const loaderAnimation = document.querySelector(`#${loaderAnimationId}`);
@@ -99,7 +106,7 @@ async function checkBackendOrFrontend(eventButton, theUrl){
 
         try {
             const date1 = Date.now();
-            const response = await fetch(`${theUrl}/availability`);
+            const response = await fetch(`${theUrl}/${testPath}`);
              
             console.log(Date.now() - date1);
             if(!response.ok){
@@ -124,8 +131,13 @@ async function checkBackendOrFrontend(eventButton, theUrl){
             // make progress bar and text reach 100%. used settimeout incase theres no delay from render, so it wont look too sudden.
             progressBar.style.width = "100%";
             loaderAnimationText.textContent = `100%`;
-        
+            
             clearInterval(startIncreasingLoader);
+            setTimeout(()=>{
+                explanatoryNote.style.display = "none";
+                loaderAnimation.style.display = "none";
+                eventButton.target.style.display = "block";
+            }, 1000);
             return true;
         } catch (error) {
             
@@ -151,7 +163,11 @@ async function checkBackendOrFrontend(eventButton, theUrl){
 
 async function checkBackendReady(eventButton){
     if(eventButton.target.getAttribute("data-backend")){
-        const backendUrl = eventButton.target.getAttribute("data-backend")
+        const backendUrl = eventButton.target.getAttribute("data-backend");
+        const testPath = eventButton.target.getAttribute("data-test-path");
+        if(testPath){
+            return await checkBackendOrFrontend(eventButton, backendUrl, testPath);
+        }
         return await checkBackendOrFrontend(eventButton, backendUrl);
         
         
